@@ -54,12 +54,12 @@ public class JwtProvider {
         return newToken;
     }
 
-    public String getAccount(String token) {
+    public String getLoginEmail(String token) {
         return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody().getSubject();
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getAccount(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getLoginEmail(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
